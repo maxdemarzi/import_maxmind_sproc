@@ -2,7 +2,7 @@
 
 Import the MaxMind Cities Database into Neo4j using a Stored Procedure
 
-This project requires Neo4j 3.2.x
+This project requires Neo4j 3.3.x
 
 Instructions
 ------------ 
@@ -15,7 +15,7 @@ project, simply package the project with maven:
 This will produce a jar-file, `target/importer-1.0-SNAPSHOT.jar`,
 that can be copied to the `plugin` directory of your Neo4j instance.
 
-    cp target/importer-1.0-SNAPSHOT.jar neo4j-enterprise-3.2.6/plugins/.
+    cp target/importer-1.0-SNAPSHOT.jar neo4j-enterprise-3.3.1/plugins/.
 
 
 Edit your Neo4j/conf/neo4j.conf file by adding this line:
