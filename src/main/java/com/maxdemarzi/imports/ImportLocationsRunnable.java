@@ -8,7 +8,6 @@ import org.apache.commons.csv.CSVRecord;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
-import org.neo4j.kernel.internal.GraphDatabaseAPI;
 import org.neo4j.logging.Log;
 
 import java.io.FileNotFoundException;
@@ -22,10 +21,10 @@ public class ImportLocationsRunnable implements Runnable {
 
     private static final int TRANSACTION_LIMIT = 1000;
     private String file;
-    private GraphDatabaseAPI db;
+    private GraphDatabaseService db;
     private Log log;
 
-    public ImportLocationsRunnable(String file, GraphDatabaseAPI db, Log log) {
+    public ImportLocationsRunnable(String file, GraphDatabaseService db, Log log) {
         this.file = file;
         this.db = db;
         this.log = log;

@@ -1,7 +1,7 @@
 package com.maxdemarzi.imports;
 
 import com.maxdemarzi.results.StringResult;
-import org.neo4j.kernel.internal.GraphDatabaseAPI;
+import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.logging.Log;
 import org.neo4j.procedure.*;
 
@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 public class Imports {
     @Context
-    public GraphDatabaseAPI db;
+    public GraphDatabaseService db;
 
     @Context
     public Log log;
