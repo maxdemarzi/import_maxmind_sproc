@@ -139,12 +139,12 @@ public class ImportLocationsRunnable implements Runnable {
     }
 
     private Node getState(GraphDatabaseService db, HashMap<String, Node> states, CSVRecord record) {
-        Node state = states.get(record.get("subdivision_1_iso_code"));
+        Node state = states.get(record.get("country_iso_code") + "-" + record.get("subdivision_1_iso_code"));
         if (state == null) {
             state = db.createNode(Labels.State);
             state.setProperty("code", record.get("subdivision_1_iso_code"));
             state.setProperty("name", record.get("subdivision_1_name"));
-            states.put(record.get("subdivision_1_iso_code"), state);
+            states.put(record.get("country_iso_code") + "-" + record.get("subdivision_1_iso_code"), state);
         }
         return state;
     }

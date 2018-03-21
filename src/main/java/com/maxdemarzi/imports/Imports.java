@@ -28,4 +28,15 @@ public class Imports {
         return Stream.of(new StringResult("Locations imported in " + TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - start) + " seconds"));
     }
 
+    @Procedure(name = "com.maxdemarzi.import.ip4", mode = Mode.WRITE)
+    @Description("CALL com.maxdemarzi.import.ip4(file)")
+    public Stream<StringResult> importIP4(@Name("file") String file) throws InterruptedException {
+        long start = System.nanoTime();
+
+        Thread t1 = new Thread(new ImportIP4Runnable(file, db, log));
+        t1.start();
+        t1.join();
+
+        return Stream.of(new StringResult("Locations imported in " + TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - start) + " seconds"));
+    }
 }

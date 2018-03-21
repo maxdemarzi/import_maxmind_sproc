@@ -37,8 +37,19 @@ public class Schema {
             schema.indexFor(Labels.State)
                     .on("code")
                     .create();
+            schema.indexFor(Labels.State)
+                    .on("name")
+                    .create();
         }
 
+        if (!schema.getConstraints(Labels.City).iterator().hasNext()) {
+            schema.constraintFor(Labels.City)
+                    .assertPropertyIsUnique("geoname_id")
+                    .create();
+            schema.indexFor(Labels.City)
+                    .on("name")
+                    .create();
+        }
         return Stream.of(new StringResult("Schema Generated"));
     }
 
