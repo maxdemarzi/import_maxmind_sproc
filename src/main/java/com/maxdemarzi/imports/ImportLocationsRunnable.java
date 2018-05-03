@@ -142,7 +142,7 @@ public class ImportLocationsRunnable implements Runnable {
         Node state = states.get(record.get("country_iso_code") + "-" + record.get("subdivision_1_iso_code"));
         if (state == null) {
             state = db.createNode(Labels.State);
-            state.setProperty("code", record.get("subdivision_1_iso_code"));
+            state.setProperty("code", record.get("country_iso_code") + "-" + record.get("subdivision_1_iso_code"));
             state.setProperty("name", record.get("subdivision_1_name"));
             states.put(record.get("country_iso_code") + "-" + record.get("subdivision_1_iso_code"), state);
         }

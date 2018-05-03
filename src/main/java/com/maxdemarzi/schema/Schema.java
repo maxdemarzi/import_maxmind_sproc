@@ -34,8 +34,8 @@ public class Schema {
         }
 
         if(!schema.getIndexes(Labels.State).iterator().hasNext()) {
-            schema.indexFor(Labels.State)
-                    .on("code")
+            schema.constraintFor(Labels.State)
+                    .assertPropertyIsUnique("code")
                     .create();
             schema.indexFor(Labels.State)
                     .on("name")
