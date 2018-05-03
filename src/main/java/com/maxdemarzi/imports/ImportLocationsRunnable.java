@@ -75,6 +75,7 @@ public class ImportLocationsRunnable implements Runnable {
                         city.setProperty("geoname_id", record.get("geoname_id"));
                         city.setProperty("name", record.get("city_name"));
                         city.setProperty("full_name", full);
+                        city.setProperty("lowercase_full_name", full.toLowerCase());
                     } else {
                         continue;
                     }

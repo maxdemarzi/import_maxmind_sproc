@@ -47,7 +47,7 @@ public class Schema {
                     .assertPropertyIsUnique("geoname_id")
                     .create();
             schema.constraintFor(Labels.City)
-                    .assertPropertyIsUnique("full_name")
+                    .assertPropertyIsUnique("lowercase_full_name")
                     .create();
             schema.indexFor(Labels.City)
                     .on("name")
