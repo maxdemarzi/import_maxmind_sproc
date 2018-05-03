@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -52,6 +53,7 @@ public class ImportLocationsRunnable implements Runnable {
         HashMap<String, Node> timezones = new HashMap<>();
 
         HashSet<String> relationships = new HashSet<>();
+        HashSet<String> seen = new HashSet<>();
 
         Transaction tx = db.beginTx();
         try {
@@ -60,11 +62,22 @@ public class ImportLocationsRunnable implements Runnable {
             assert records != null;
             for (CSVRecord record : records) {
                 count++;
+                ArrayList<String> fullName = new ArrayList<>();
                 Node city = null;
                 if (!record.get("city_name").isEmpty()) {
-                    city = db.createNode(Labels.City);
-                    city.setProperty("geoname_id", record.get("geoname_id"));
-                    city.setProperty("name", record.get("city_name"));
+                    fullName.add(record.get("city_name"));
+                    if (!record.get("subdivision_2_name").isEmpty()) fullName.add(record.get("subdivision_2_name"));
+                    fullName.add(record.get("subdivision_1_name"));
+                    fullName.add(record.get("country_name"));
+                    String full = String.join(", ", fullName);
+                    if (seen.add(full)) {
+                        city = db.createNode(Labels.City);
+                        city.setProperty("geoname_id", record.get("geoname_id"));
+                        city.setProperty("name", record.get("city_name"));
+                        city.setProperty("full_name", full);
+                    } else {
+                        continue;
+                    }
                 }
                 // Connect Country to Continent if necessary
                 if (!relationships.contains("c2c" + record.get("country_iso_code") + "-" + record.get("continent_code"))) {
